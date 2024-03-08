@@ -1,44 +1,19 @@
 package dev.naimsulejmani.locationservicegr2.controllers;
 
+import dev.naimsulejmani.locationservicegr2.dtos.RoleDto;
 import dev.naimsulejmani.locationservicegr2.entities.Role;
+import dev.naimsulejmani.locationservicegr2.infrastructure.BaseController;
+import dev.naimsulejmani.locationservicegr2.mappers.RoleMapper;
 import dev.naimsulejmani.locationservicegr2.services.RoleService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/roles")
-public class RoleController {
-    private final RoleService service;
+public class RoleController extends BaseController<Role, Integer, RoleDto> {
 
-    public RoleController(RoleService service) {
-        this.service = service;
+
+    protected RoleController(RoleService service, RoleMapper mapper) {
+        super(service, mapper);
     }
-
-    @GetMapping
-    public List<Role> getAll() {
-        return service.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Role getById(@PathVariable int id) {
-        return service.findById(id);
-    }
-
-    @PostMapping
-    public Role insert(@RequestBody Role role) {
-        return service.add(role);
-    }
-
-    @PutMapping("/{id}")
-    public Role update(@PathVariable int id, @RequestBody Role role) {
-        return service.modify(id, role);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        service.removeById(id);
-    }
-
-
 }
