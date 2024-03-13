@@ -1,13 +1,16 @@
-package dev.naimsulejmani.locationservicegr2.infrastructure;
+package dev.naimsulejmani.locationservicegr2.infrastructure.controllers;
 
+import dev.naimsulejmani.locationservicegr2.infrastructure.helpers.Convertable;
+import dev.naimsulejmani.locationservicegr2.infrastructure.services.BaseService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public abstract class BaseController<TEntity, ID, TDto> {
-    private final BaseService<TEntity, ID> service;
-    private final Convertable<TEntity, TDto> mapper;
+    protected final BaseService<TEntity, ID> service;
+    protected final Convertable<TEntity, TDto> mapper;
 
     protected BaseController(BaseService<TEntity, ID> service, Convertable<TEntity, TDto> mapper) {
         this.service = service;
@@ -28,14 +31,14 @@ public abstract class BaseController<TEntity, ID, TDto> {
     }
 
     @PostMapping
-    public ResponseEntity<TDto> add(@RequestBody TDto dto) {
+    public ResponseEntity<TDto> add(@Valid @RequestBody TDto dto) {
         var entity = mapper.toEntity(dto);
         entity = service.add(entity);
         return ResponseEntity.ok(mapper.toDto(entity));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TDto> modify(@PathVariable ID id, @RequestBody TDto dto) {
+    public ResponseEntity<TDto> modify(@PathVariable ID id, @Valid @RequestBody TDto dto) {
         //validimi oren e rrathes duke shtuar nje interface HasId
 
         var entity = mapper.toEntity(dto);

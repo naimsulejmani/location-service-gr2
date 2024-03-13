@@ -1,23 +1,34 @@
 package dev.naimsulejmani.locationservicegr2.controllers;
 
 import dev.naimsulejmani.locationservicegr2.dtos.UserDto;
+import dev.naimsulejmani.locationservicegr2.dtos.UserSimpleDto;
 import dev.naimsulejmani.locationservicegr2.entities.User;
-import dev.naimsulejmani.locationservicegr2.infrastructure.BaseController;
-import dev.naimsulejmani.locationservicegr2.infrastructure.BaseService;
-import dev.naimsulejmani.locationservicegr2.infrastructure.Convertable;
+import dev.naimsulejmani.locationservicegr2.infrastructure.controllers.BaseController;
 import dev.naimsulejmani.locationservicegr2.mappers.UserMapper;
 import dev.naimsulejmani.locationservicegr2.services.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("api/users")
 public class UserController extends BaseController<User, Long, UserDto> {
     protected UserController(UserService service, UserMapper mapper) {
         super(service, mapper);
+    }
+
+
+    @GetMapping("/simple")
+    public ResponseEntity<List<UserSimpleDto>> findAllSimpleDtos() {
+        var users = service.findAll();
+        return ResponseEntity.ok(users.stream().map(getUserMapper()::toUserSimpleDto).toList());
+    }
+
+    private  UserMapper getUserMapper() {
+        return (UserMapper) mapper;
     }
 //    private final UserService service;
 //    private final UserMapper mapper;

@@ -2,7 +2,7 @@ package dev.naimsulejmani.locationservicegr2.controllers;
 
 import dev.naimsulejmani.locationservicegr2.dtos.RoleDto;
 import dev.naimsulejmani.locationservicegr2.entities.Role;
-import dev.naimsulejmani.locationservicegr2.infrastructure.BaseController;
+import dev.naimsulejmani.locationservicegr2.infrastructure.controllers.BaseController;
 import dev.naimsulejmani.locationservicegr2.mappers.RoleMapper;
 import dev.naimsulejmani.locationservicegr2.services.RoleService;
 import org.springframework.web.bind.annotation.RequestMapping;

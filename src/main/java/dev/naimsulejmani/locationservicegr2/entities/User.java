@@ -1,5 +1,6 @@
 package dev.naimsulejmani.locationservicegr2.entities;
 
+import dev.naimsulejmani.locationservicegr2.infrastructure.helpers.HasId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +16,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements HasId<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
+
     @Column(unique = true)
     private String username;
     private String password;

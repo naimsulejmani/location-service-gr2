@@ -1,7 +1,7 @@
 package dev.naimsulejmani.locationservicegr2.services.impls;
 
 import dev.naimsulejmani.locationservicegr2.entities.User;
-import dev.naimsulejmani.locationservicegr2.infrastructure.BaseServiceImpl;
+import dev.naimsulejmani.locationservicegr2.infrastructure.services.impls.BaseServiceImpl;
 import dev.naimsulejmani.locationservicegr2.repositories.UserRepository;
 import dev.naimsulejmani.locationservicegr2.services.UserService;
 import org.springframework.stereotype.Service;

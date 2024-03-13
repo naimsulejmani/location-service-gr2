@@ -1,4 +1,4 @@
-package dev.naimsulejmani.locationservicegr2.infrastructure;
+package dev.naimsulejmani.locationservicegr2.infrastructure.helpers;
 
 public interface Convertable<TEntity, TDto> {
     public TEntity toEntity(TDto dto);

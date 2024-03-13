@@ -1,4 +1,4 @@
-package dev.naimsulejmani.locationservicegr2.controllers;
+package dev.naimsulejmani.locationservicegr2.infrastructure.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

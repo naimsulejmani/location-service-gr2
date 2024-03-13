@@ -2,7 +2,7 @@ package dev.naimsulejmani.locationservicegr2.mappers;
 
 import dev.naimsulejmani.locationservicegr2.dtos.RoleDto;
 import dev.naimsulejmani.locationservicegr2.entities.Role;
-import dev.naimsulejmani.locationservicegr2.infrastructure.Convertable;
+import dev.naimsulejmani.locationservicegr2.infrastructure.helpers.Convertable;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
