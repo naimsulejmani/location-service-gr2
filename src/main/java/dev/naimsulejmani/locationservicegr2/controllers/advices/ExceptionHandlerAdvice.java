@@ -3,8 +3,10 @@ package dev.naimsulejmani.locationservicegr2.controllers.advices;
 import dev.naimsulejmani.locationservicegr2.infrastructure.exceptions.AlreadyExistException;
 import dev.naimsulejmani.locationservicegr2.infrastructure.exceptions.NotFoundException;
 import dev.naimsulejmani.locationservicegr2.infrastructure.exceptions.UnauthorizedException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,13 +28,15 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exception.getMessage());
     }
 
+    @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
+    public static ResponseEntity<?> handleException(RuntimeException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public static ResponseEntity<?> handleException(Exception exception) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
     }
-
-
-
 }
 
 
