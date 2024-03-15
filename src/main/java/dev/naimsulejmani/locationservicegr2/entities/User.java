@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -40,4 +41,30 @@ public class User implements HasId<Long> {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Family> families;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<FamilyMember> familyMembers;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Location> locations;
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
