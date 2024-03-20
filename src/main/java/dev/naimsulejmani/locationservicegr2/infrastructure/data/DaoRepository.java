@@ -3,7 +3,7 @@ package dev.naimsulejmani.locationservicegr2.infrastructure.data;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.procedure.ProcedureCall;
 import org.springframework.stereotype.Repository;
@@ -18,7 +18,7 @@ public class DaoRepository implements DbDao {
     private EntityManager entityManager;
 
     @Override
-    public <T> List<T> getResultFromProcedure(String procedureName, Map<String, Object> inParams, Map<String, Object> outParams, Class className) {
+    public <T> List<T> getResultFromProcedure(String procedureName, Map<String, Object> inParams, Map<String, Object> outParams, Class<T> className) {
         Session session = entityManager.unwrap(Session.class); // krijo sessionin me lidhje me db
         ProcedureCall procedureCall = session.createStoredProcedureCall(procedureName, className);// CALL sp_test (?,?)
         //qitu shtoj parametrat ne menyre dinamike
@@ -49,12 +49,16 @@ public class DaoRepository implements DbDao {
     }
 
     @Override
-    public <T> List<T> getResultFromQuery(String query, Map<String, Object> inParams, Class className) {
-        Session session = entityManager.unwrap(Session.class); // krijo sessionin me lidhje me db
-        Query nativeQuery = session.createNativeQuery(query, className);
-        // qitu shtoj parametrat ne menyre dinaime nese ka
+    public <T> List<T> getResultFromQuery(String query, Map<String, Object> inParams, Class<T> className) {
+        Session session = entityManager.unwrap(Session.class);
+        TypedQuery<T> nativeQuery = session.createNativeQuery(query, className);
+        if (inParams != null) {
+            for (Map.Entry<String, Object> entry : inParams.entrySet()) {
+                nativeQuery.setParameter(entry.getKey(), entry.getValue());
+            }
+        }
 
-        var resultSet = (List<T>) nativeQuery.getResultList();
+        var resultSet = nativeQuery.getResultList();
 
         session.close();
 

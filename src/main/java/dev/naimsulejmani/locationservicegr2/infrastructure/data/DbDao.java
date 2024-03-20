@@ -7,10 +7,10 @@ public interface DbDao {
     <T> List<T> getResultFromProcedure(String procedureName,
                                        Map<String, Object> inParams,
                                        Map<String, Object> outParams,
-                                       Class className);
+                                       Class<T> className);
 
     <T> List<T> getResultFromQuery(String query,
                                    Map<String, Object> inParams,
-                                   Class className
+                                   Class<T> className
     );
 }

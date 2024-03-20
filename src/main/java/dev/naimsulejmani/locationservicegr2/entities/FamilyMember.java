@@ -31,8 +31,8 @@ public class FamilyMember implements HasId<Long> {
     private Boolean approved;
     private LocalDateTime approvedDate;
 
-    @OneToMany(mappedBy = "familyMember", fetch = FetchType.LAZY)
-    private List<Location> locations;
+//    @OneToMany(mappedBy = "familyMember", fetch = FetchType.LAZY)
+//    private List<Location> locations;
 
 }
 

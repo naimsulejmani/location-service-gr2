@@ -1,5 +1,6 @@
 package dev.naimsulejmani.locationservicegr2.controllers.advices;
 
+import dev.naimsulejmani.locationservicegr2.dtos.ErrorMessage;
 import dev.naimsulejmani.locationservicegr2.infrastructure.exceptions.AlreadyExistException;
 import dev.naimsulejmani.locationservicegr2.infrastructure.exceptions.NotFoundException;
 import dev.naimsulejmani.locationservicegr2.infrastructure.exceptions.UnauthorizedException;
@@ -9,13 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+
+import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(NotFoundException.class)
-    public static ResponseEntity<?> handleException(NotFoundException exception) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public static ResponseEntity<?> handleException(NotFoundException exception, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(), LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true)
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(AlreadyExistException.class)
